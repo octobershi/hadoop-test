@@ -8,12 +8,14 @@ import org.apache.avro.mapred.AvroValue;
 import org.apache.avro.mapreduce.AvroJob;
 import org.apache.avro.mapreduce.AvroKeyInputFormat;
 import org.apache.avro.mapreduce.AvroKeyValueOutputFormat;
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.MRJobConfig;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -47,6 +49,8 @@ public class HadoopAvroTestApplication extends Configured implements Tool {
             System.err.println("Usage: MapReduceColorCount <input path> <output path>");
             return -1;
         }
+        Configuration conf = getConf();
+        conf.setBoolean(MRJobConfig.MAPREDUCE_JOB_USER_CLASSPATH_FIRST, true);
         Job job = Job.getInstance(getConf());
         job.setJarByClass(HadoopAvroTestApplication.class);
         job.setJobName("avro count");
@@ -68,11 +72,11 @@ public class HadoopAvroTestApplication extends Configured implements Tool {
         return job.waitForCompletion(true) ? 0 : 1;
     }
 
-    public static class AvroCountMapper extends Mapper<AvroKey<User>, NullWritable, Text, IntWritable> {
+    public static class AvroCountMapper extends Mapper<AvroKey<GenericRecord>, NullWritable, Text, IntWritable> {
 
         @Override
-        public void map(AvroKey<User> key, NullWritable value, Context context) throws IOException, InterruptedException {
-            CharSequence name = key.datum().getUser();
+        public void map(AvroKey<GenericRecord> key, NullWritable value, Context context) throws IOException, InterruptedException {
+            CharSequence name = key.datum().get("user").toString();
             context.write(new Text(name.toString()), new IntWritable(1));
         }
     }
@@ -86,10 +90,4 @@ public class HadoopAvroTestApplication extends Configured implements Tool {
         }
     }
 
-    @Data
-    private static class User {
-
-        private String user;
-        private String pwd;
-    }
 }

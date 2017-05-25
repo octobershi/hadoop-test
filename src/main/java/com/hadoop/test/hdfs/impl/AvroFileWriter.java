@@ -40,7 +40,7 @@ public class AvroFileWriter implements Writer {
             writer.create(schema, out);
             //writer.setCodec(CodecFactory.snappyCodec());
 
-            for(int i = 0; i < 2000000; i++){
+            for(int i = 0; i < 100; i++){
                 GenericRecord record = new GenericData.Record(schema);
                 record.put("user", "user" + i % 4);
                 record.put("pwd", "pwd" + i % 4);
