@@ -19,12 +19,7 @@ public class CopyToHDFS implements Writer {
         Configuration conf = new Configuration();
         try(InputStream in = new BufferedInputStream(new FileInputStream(local));
             FileSystem fs = FileSystem.get(URI.create(dest), conf);
-            OutputStream out = fs.create(new Path(dest), new Progressable() {
-                @Override
-                public void progress() {
-                    System.out.print(".");
-                }
-            })){
+            OutputStream out = fs.create(new Path(dest), () -> System.out.print("."))){
             IOUtils.copyBytes(in, out, 4096, false);
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,23 +1,16 @@
 package com.hadoop.test;
 
-import com.hadoop.test.hdfs.Reader;
 import com.hadoop.test.hdfs.Writer;
-import com.hadoop.test.hdfs.impl.CopyToHDFS;
-import com.hadoop.test.hdfs.impl.FileSystemReader;
-import com.hadoop.test.hdfs.impl.URIReader;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.hadoop.test.hdfs.impl.AvroFileWriter;
 
-@SpringBootApplication
 public class HadoopTestApplication {
 
 	public static void main(String[] args) {
 
-		SpringApplication.run(HadoopTestApplication.class, args);
 //		Reader reader = new URIReader();
 //		reader.read();
 
-		Writer writer = new CopyToHDFS();
+		Writer writer = new AvroFileWriter();
 		writer.write();
 
 	}
