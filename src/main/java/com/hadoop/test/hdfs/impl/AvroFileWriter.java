@@ -30,17 +30,17 @@ public class AvroFileWriter implements Writer {
 
     @Override
     public void write() {
-        String dest = "hdfs://localhost/user/yshi/avro_test";
+        String dest = "hdfs://localhost/user/yshi/avro_test_deflate";
         Configuration conf = new Configuration();
         try(FileSystem fs = FileSystem.get(URI.create(dest), conf);
             OutputStream out = fs.create(new Path(dest), () -> System.out.print("."));
             DataFileWriter<Object> writer = new DataFileWriter<>(new GenericDatumWriter<Object>())){
 
             Schema schema = new Schema.Parser().parse(SCHEMA);
+            writer.setCodec(CodecFactory.deflateCodec(9));
             writer.create(schema, out);
-            //writer.setCodec(CodecFactory.snappyCodec());
 
-            for(int i = 0; i < 100; i++){
+            for(int i = 0; i < 200_000_000; i++){
                 GenericRecord record = new GenericData.Record(schema);
                 record.put("user", "user" + i % 4);
                 record.put("pwd", "pwd" + i % 4);
