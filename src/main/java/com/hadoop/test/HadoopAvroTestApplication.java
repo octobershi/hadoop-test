@@ -10,6 +10,7 @@ import org.apache.avro.mapreduce.AvroKeyInputFormat;
 import org.apache.avro.mapreduce.AvroKeyValueOutputFormat;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
@@ -49,14 +50,21 @@ public class HadoopAvroTestApplication extends Configured implements Tool {
             System.err.println("Usage: MapReduceColorCount <input path> <output path>");
             return -1;
         }
+        Path input = new Path(args[1]);
+        Path output = new Path(args[2]);
         Configuration conf = getConf();
+        conf.addResource("configuration_test.xml");
+        FileSystem fs = FileSystem.get(conf);
+        fs.delete(output, true);
+        System.out.println("framework: " + conf.get("mapreduce.framework.name"));
+        System.out.println("key: " + conf.get("key"));
         conf.setBoolean(MRJobConfig.MAPREDUCE_JOB_USER_CLASSPATH_FIRST, true);
         Job job = Job.getInstance(getConf());
         job.setJarByClass(HadoopAvroTestApplication.class);
         job.setJobName("avro count");
 
-        FileInputFormat.addInputPath(job, new Path(args[1]));
-        FileOutputFormat.setOutputPath(job, new Path(args[2]));
+        FileInputFormat.addInputPath(job, input);
+        FileOutputFormat.setOutputPath(job, output);
 
         job.setInputFormatClass(AvroKeyInputFormat.class);
         job.setMapperClass(AvroCountMapper.class);

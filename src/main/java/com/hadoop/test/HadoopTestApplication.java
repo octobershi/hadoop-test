@@ -9,11 +9,11 @@ public class HadoopTestApplication {
 
 	public static void main(String[] args) {
 
-		Reader reader = new AvroFileReader();
-		reader.read();
+//		Reader reader = new AvroFileReader();
+//		reader.read();
 
-//		Writer writer = new AvroFileWriter();
-//		writer.write();
+		Writer writer = new AvroFileWriter();
+		writer.write();
 
 	}
 }
