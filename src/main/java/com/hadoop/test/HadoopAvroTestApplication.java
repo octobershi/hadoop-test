@@ -1,6 +1,5 @@
 package com.hadoop.test;
 
-import lombok.Data;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.mapred.AvroKey;
@@ -45,15 +44,13 @@ public class HadoopAvroTestApplication extends Configured implements Tool {
 
     @Override
     public int run(String[] args) throws Exception {
-        System.out.println(args[0]);
-        if (args.length != 3) {
+        if (args.length != 2) {
             System.err.println("Usage: MapReduceColorCount <input path> <output path>");
             return -1;
         }
         Path input = new Path(args[1]);
         Path output = new Path(args[2]);
         Configuration conf = getConf();
-        conf.addResource("configuration_test.xml");
         FileSystem fs = FileSystem.get(conf);
         fs.delete(output, true);
         System.out.println("framework: " + conf.get("mapreduce.framework.name"));
@@ -86,6 +83,8 @@ public class HadoopAvroTestApplication extends Configured implements Tool {
         public void map(AvroKey<GenericRecord> key, NullWritable value, Context context) throws IOException, InterruptedException {
             CharSequence name = key.datum().get("user").toString();
             context.write(new Text(name.toString()), new IntWritable(1));
+            CharSequence pwd = key.datum().get("pwd").toString();
+            context.write(new Text(pwd.toString()), new IntWritable(1));
         }
     }
 

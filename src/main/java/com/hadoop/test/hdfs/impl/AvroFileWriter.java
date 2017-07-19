@@ -41,10 +41,10 @@ public class AvroFileWriter implements Writer {
             writer.setCodec(CodecFactory.deflateCodec(9));
             writer.create(schema, out);
 
-            for(int i = 0; i < 1_000; i++){
+            for(int i = 0; i < 1_000_000; i++){
                 GenericRecord record = new GenericData.Record(schema);
-                record.put("user", "user" + i % 4);
-                record.put("pwd", "pwd" + i % 4);
+                record.put("user", "user" + i % 7);
+                record.put("pwd", "pwd" + i % 7);
                 writer.append(record);
             }
         } catch (IOException e) {
