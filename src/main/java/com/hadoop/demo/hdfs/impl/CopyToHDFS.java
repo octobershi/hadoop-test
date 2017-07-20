@@ -1,6 +1,6 @@
-package com.hadoop.test.hdfs.impl;
+package com.hadoop.demo.hdfs.impl;
 
-import com.hadoop.test.hdfs.Writer;
+import com.hadoop.demo.hdfs.Writer;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -13,7 +13,7 @@ public class CopyToHDFS implements Writer {
 
     @Override
     public void write() {
-        String local = "/usr/local/opt/hadoop-2.8.0/bin/test";
+        String local = "/usr/local/opt/hadoop-2.8.0/bin/demo";
         String dest = "hdfs://localhost/user/yshi/new_test";
         Configuration conf = new Configuration();
         try(InputStream in = new BufferedInputStream(new FileInputStream(local));

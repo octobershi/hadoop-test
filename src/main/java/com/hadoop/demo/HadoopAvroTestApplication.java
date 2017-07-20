@@ -1,4 +1,4 @@
-package com.hadoop.test;
+package com.hadoop.demo;
 
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericRecord;

@@ -1,16 +1,9 @@
-package com.hadoop.test.hdfs.impl;
+package com.hadoop.demo.hdfs.impl;
 
-import com.hadoop.test.hdfs.Writer;
-import org.apache.avro.Schema;
-import org.apache.avro.file.CodecFactory;
-import org.apache.avro.file.DataFileWriter;
-import org.apache.avro.generic.GenericData;
-import org.apache.avro.generic.GenericDatumWriter;
-import org.apache.avro.generic.GenericRecord;
+import com.hadoop.demo.hdfs.Writer;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IOUtils;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -27,8 +20,8 @@ public class CommonFileWriter implements Writer {
             OutputStream out = fs.create(new Path(dest), () -> System.out.print("."))){
 
             for(int i = 0; i < 1_000_000; i++){
-                out.write(("user" + i % 7 + "\n").getBytes());
-                out.write(("pwd" + i % 7 + "\n").getBytes());
+                out.write(("user" + i % 4 + "\n").getBytes());
+                out.write(("pwd" + i % 4 + "\n").getBytes());
             }
         } catch (IOException e) {
             e.printStackTrace();

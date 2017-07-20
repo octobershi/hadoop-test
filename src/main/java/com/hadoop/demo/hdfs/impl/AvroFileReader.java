@@ -1,15 +1,8 @@
-package com.hadoop.test.hdfs.impl;
+package com.hadoop.demo.hdfs.impl;
 
-import com.hadoop.test.hdfs.Reader;
-import com.hadoop.test.hdfs.Writer;
-import org.apache.avro.Schema;
-import org.apache.avro.file.CodecFactory;
-import org.apache.avro.file.DataFileReader;
+import com.hadoop.demo.hdfs.Reader;
 import org.apache.avro.file.DataFileStream;
-import org.apache.avro.file.DataFileWriter;
-import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericDatumReader;
-import org.apache.avro.generic.GenericDatumWriter;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -17,7 +10,6 @@ import org.apache.hadoop.fs.Path;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URI;
 
 public class AvroFileReader implements Reader {

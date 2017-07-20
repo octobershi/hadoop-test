@@ -1,11 +1,10 @@
-package com.hadoop.test;
+package com.hadoop.demo;
 
-import com.hadoop.test.hdfs.Reader;
-import com.hadoop.test.hdfs.Writer;
-import com.hadoop.test.hdfs.impl.AvroFileReader;
-import com.hadoop.test.hdfs.impl.AvroFileWriter;
-import com.hadoop.test.hdfs.impl.CommonFileWriter;
-import org.apache.hadoop.io.Text;
+import com.hadoop.demo.hdfs.Reader;
+import com.hadoop.demo.hdfs.Writer;
+import com.hadoop.demo.hdfs.impl.AvroFileReader;
+import com.hadoop.demo.hdfs.impl.AvroFileWriter;
+import com.hadoop.demo.hdfs.impl.CommonFileWriter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

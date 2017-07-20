@@ -1,6 +1,6 @@
-package com.hadoop.test.hdfs.impl;
+package com.hadoop.demo.hdfs.impl;
 
-import com.hadoop.test.hdfs.Reader;
+import com.hadoop.demo.hdfs.Reader;
 import org.apache.hadoop.fs.FsUrlStreamHandlerFactory;
 import org.apache.hadoop.io.IOUtils;
 
@@ -17,7 +17,7 @@ public class URIReader implements Reader {
 
     public void read(){
         System.out.println("=================== URI ===================");
-        try(InputStream is = new URL("hdfs://localhost:8020/user/yshi/test").openStream()){
+        try(InputStream is = new URL("hdfs://localhost:8020/user/yshi/demo").openStream()){
             IOUtils.copyBytes(is, System.out, 4096, false);
         } catch (IOException e){
             e.printStackTrace();

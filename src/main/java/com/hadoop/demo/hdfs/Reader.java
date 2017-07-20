@@ -1,4 +1,4 @@
-package com.hadoop.test.hdfs;
+package com.hadoop.demo.hdfs;
 
 /**
  * Created by yshi on 5/24/17.

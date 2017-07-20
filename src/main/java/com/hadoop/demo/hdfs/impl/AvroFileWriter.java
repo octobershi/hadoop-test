@@ -1,7 +1,6 @@
-package com.hadoop.test.hdfs.impl;
+package com.hadoop.demo.hdfs.impl;
 
-import com.hadoop.test.HadoopAvroTestApplication;
-import com.hadoop.test.hdfs.Writer;
+import com.hadoop.demo.hdfs.Writer;
 import org.apache.avro.Schema;
 import org.apache.avro.file.CodecFactory;
 import org.apache.avro.file.DataFileWriter;
@@ -11,8 +10,6 @@ import org.apache.avro.generic.GenericRecord;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IOUtils;
-import org.apache.hadoop.util.Progressable;
 
 import java.io.*;
 import java.net.URI;
