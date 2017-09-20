@@ -14,12 +14,12 @@ public class CommonFileWriter implements Writer {
     @Override
     public void write() {
         //System.setProperty("HADOOP_USER_NAME", "yshi");
-        String dest = "hdfs://localhost:8020/user/yshi/common_test";
+        String dest = "hdfs://localhost:8020/user/yshi/common_test_big";
         Configuration conf = new Configuration();
         try(FileSystem fs = FileSystem.get(URI.create(dest), conf);
             OutputStream out = fs.create(new Path(dest), () -> System.out.print("."))){
 
-            for(int i = 0; i < 1_000_000; i++){
+            for(int i = 0; i < 100_000_000; i++){
                 out.write(("user" + i % 4 + "\n").getBytes());
                 out.write(("pwd" + i % 4 + "\n").getBytes());
             }

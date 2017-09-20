@@ -8,8 +8,6 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.io.compress.CompressionCodec;
-import org.apache.hadoop.io.compress.SnappyCodec;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.MRJobConfig;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -23,9 +21,9 @@ import org.apache.hadoop.util.ToolRunner;
 import java.io.IOException;
 import java.util.stream.StreamSupport;
 
-public class HadoopCommonTestApplication extends Configured implements Tool {
+public class HadoopSequenceTestApplication extends Configured implements Tool {
 
-    private static final Log log = LogFactory.getLog(HadoopCommonTestApplication.class);
+    private static final Log log = LogFactory.getLog(HadoopSequenceTestApplication.class);
 
 	public static class CommonMapper extends Mapper<Object, Text, Text, IntWritable>{
 
@@ -33,6 +31,7 @@ public class HadoopCommonTestApplication extends Configured implements Tool {
 
 	    @Override
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
+            context.write((Text)key, one);
             context.write(value, one);
         }
     }
@@ -79,7 +78,10 @@ public class HadoopCommonTestApplication extends Configured implements Tool {
         fs.delete(output, true);
 
         Job job = Job.getInstance(conf, "common text");
-        job.setJarByClass(HadoopCommonTestApplication.class);
+        job.setJarByClass(HadoopSequenceTestApplication.class);
+
+        // N.B. to set the input format
+        job.setInputFormatClass(SequenceFileInputFormat.class);
 
         job.setMapperClass(CommonMapper.class);
         job.setCombinerClass(CommonReducer.class);
@@ -94,7 +96,7 @@ public class HadoopCommonTestApplication extends Configured implements Tool {
     }
 
     public static void main(String[] args) throws Exception {
-	    int result = ToolRunner.run(new HadoopCommonTestApplication(), args);
+	    int result = ToolRunner.run(new HadoopSequenceTestApplication(), args);
 	    log.debug("System exits with status " + result);
         System.exit(result);
     }
